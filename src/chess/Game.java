@@ -1,10 +1,15 @@
 package chess;
 
-public class Game {
+ 
+
+public class Game{
 
 	private ChessBoard m_chessBoard;
 	private Player m_player1;
 	private Player m_player2;
+	
+	
+	private Boolean m_playerWhiteTurn = true;
 	
 	
 	public Game(ChessBoard chessBoard, Player player1, Player player2){
@@ -13,6 +18,8 @@ public class Game {
 		m_player2 = player2;
 		
 		initializePieces();
+		
+		
 		
 	}
 	
@@ -25,46 +32,83 @@ public class Game {
 	private void initializeBlackPieces(){
 		
 		
-		m_chessBoard.m_boxes[7][0].m_Piece = new Rook("black");
-		m_chessBoard.m_boxes[7][1].m_Piece = new Knight("black");
-		m_chessBoard.m_boxes[7][2].m_Piece = new Bishop("black");
-		m_chessBoard.m_boxes[7][3].m_Piece = new Queen("black");
-		m_chessBoard.m_boxes[7][4].m_Piece = new King("black");
-		m_chessBoard.m_boxes[7][5].m_Piece = new Bishop("black");
-		m_chessBoard.m_boxes[7][6].m_Piece = new Knight("black");
-		m_chessBoard.m_boxes[7][7].m_Piece = new Rook("black");
+		m_chessBoard.m_boxes[7][0].m_piece = new Rook("black");
+		m_chessBoard.m_boxes[7][1].m_piece = new Knight("black");
+		m_chessBoard.m_boxes[7][2].m_piece = new Bishop("black");
+		m_chessBoard.m_boxes[7][3].m_piece = new Queen("black");
+		m_chessBoard.m_boxes[7][4].m_piece = new King("black");
+		m_chessBoard.m_boxes[7][5].m_piece = new Bishop("black");
+		m_chessBoard.m_boxes[7][6].m_piece = new Knight("black");
+		m_chessBoard.m_boxes[7][7].m_piece = new Rook("black");
 		
 		for(int i = 0; i < 8; i++){
-			m_chessBoard.m_boxes[6][i].m_Piece = new Pawn("black");
+			m_chessBoard.m_boxes[6][i].m_piece = new Pawn("black");
 		}
 		
 	}
 	
 	private void initializeWhitePieces(){
-		m_chessBoard.m_boxes[0][0].m_Piece = new Rook("white");
-		m_chessBoard.m_boxes[0][1].m_Piece = new Knight("white");
-		m_chessBoard.m_boxes[0][2].m_Piece = new Bishop("white");
-		m_chessBoard.m_boxes[0][3].m_Piece = new Queen("white");
-		m_chessBoard.m_boxes[0][4].m_Piece = new King("white");
-		m_chessBoard.m_boxes[0][5].m_Piece = new Bishop("white");
-		m_chessBoard.m_boxes[0][6].m_Piece = new Knight("white");
-		m_chessBoard.m_boxes[0][7].m_Piece = new Rook("white");
+		m_chessBoard.m_boxes[0][0].m_piece = new Rook("white");
+		m_chessBoard.m_boxes[0][1].m_piece = new Knight("white");
+		m_chessBoard.m_boxes[0][2].m_piece = new Bishop("white");
+		m_chessBoard.m_boxes[0][3].m_piece = new Queen("white");
+		m_chessBoard.m_boxes[0][4].m_piece = new King("white");
+		m_chessBoard.m_boxes[0][5].m_piece = new Bishop("white");
+		m_chessBoard.m_boxes[0][6].m_piece = new Knight("white");
+		m_chessBoard.m_boxes[0][7].m_piece = new Rook("white");
 		
 		for(int i = 0; i < 8; i++){
-			m_chessBoard.m_boxes[1][i].m_Piece = new Pawn("white");
+			m_chessBoard.m_boxes[1][i].m_piece = new Pawn("white");
 		}
 		
 	}
 	
 	
 	public static void main(String[] args){
-		Player player1 = new Player();
-		Player player2 = new Player();
+		Player player1 = new Player("white");
+		Player player2 = new Player("black");
 		ChessBoard chessBoard = new ChessBoard();
 		
 		Game game = new Game(chessBoard,player1,player2);
 		
+		//Implement turns
 		
 	}
 	
 }
+
+
+/*
+onePlaysNext = true;
+
+ 
+
+public void switchPlayer() {
+
+    onePlaysNext = !onePlaysNext
+
+}
+
+ 
+
+//Player 1:
+
+if (onePlaysNext) {
+
+    //player 1 acts.
+
+    switchPlayer();
+
+}   
+
+ 
+
+Player 2:
+if (!onePlaysNext) {
+
+    //player 2 acts.
+
+    switchPlayer();
+
+}*/
+

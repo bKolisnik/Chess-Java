@@ -1,5 +1,7 @@
 package chess;
 
+import java.awt.Graphics;
+
 public class Rook extends Piece {
 
 	public Rook(String colour) {
@@ -7,4 +9,8 @@ public class Rook extends Piece {
 		
 	}
 
+	@Override
+	public void paint(Graphics g, int x, int y){
+		
+	}
 }
