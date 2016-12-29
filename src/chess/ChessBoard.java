@@ -11,6 +11,8 @@ public class ChessBoard {
 	private Boolean m_rowEven;
 	private List<Piece> m_removedPieces = new ArrayList<Piece>();
 	
+	//keep fields private use getters and setters to retieve and alter from other objects.
+	
 	//Diagonal
 	private List<int[]>m_PossibleMovesDiagonalForwardRight = new ArrayList<int[]>();
 	private List<int[]>m_PossibleMovesDiagonalBackwardRight = new ArrayList<int[]>();
@@ -23,6 +25,38 @@ public class ChessBoard {
 	private List<int[]>m_PossibleMovesVerticalForward= new ArrayList<int[]>();
 	private List<int[]>m_PossibleMovesVerticalBackward= new ArrayList<int[]>();
 	
+	//Singlebox directions (for king)
+	private List<int[]>m_PossibleMovesSingleBoxVerticalForward= new ArrayList<int[]>();
+	private List<int[]>m_PossibleMovesSingleBoxVerticalBackward= new ArrayList<int[]>();
+	private List<int[]>m_PossibleMovesSingleBoxHorizontalRight= new ArrayList<int[]>();
+	private List<int[]>m_PossibleMovesSingleBoxHorizontalLeft= new ArrayList<int[]>();
+	private List<int[]>m_PossibleMovesSingleBoxDiagonalForwardRight= new ArrayList<int[]>();
+	private List<int[]>m_PossibleMovesSingleBoxDiagonalForwardLeft= new ArrayList<int[]>();
+	private List<int[]>m_PossibleMovesSingleBoxDiagonalBackwardRight= new ArrayList<int[]>();
+	private List<int[]>m_PossibleMovesSingleBoxDiagonalBackwardLeft= new ArrayList<int[]>();
+	
+	//Singlebox directions (for pawn). Special as cannot attack forward can only move diagonally if attacking..
+	private List<int[]>m_PossibleMovesPawnVerticalForward= new ArrayList<int[]>();
+	private List<int[]>m_PossibleMovesPawnVerticalForwardFirstMoveWithPiece= new ArrayList<int[]>();
+	private List<int[]>m_PossibleMovesPawnDiagonalForwardRight= new ArrayList<int[]>();
+	private List<int[]>m_PossibleMovesPawnDiagonalForwardLeft= new ArrayList<int[]>();
+	
+	//Knight leaps. Jump 1 is vertical 2, horizontal 1. Jump 2 is vertical 1 , horizontal 2.
+	private List<int[]>m_PossibleMovesKnightJump1ForwardRight= new ArrayList<int[]>();
+	private List<int[]>m_PossibleMovesKnightJump1ForwardLeft= new ArrayList<int[]>();
+	private List<int[]>m_PossibleMovesKnightJump1BackwardRight= new ArrayList<int[]>();
+	private List<int[]>m_PossibleMovesKnightJump1BackwardLeft= new ArrayList<int[]>();
+	private List<int[]>m_PossibleMovesKnightJump2ForwardRight= new ArrayList<int[]>();
+	private List<int[]>m_PossibleMovesKnightJump2ForwardLeft= new ArrayList<int[]>();
+	private List<int[]>m_PossibleMovesKnightJump2BackwardRight= new ArrayList<int[]>();
+	private List<int[]>m_PossibleMovesKnightJump2BackwardLeft= new ArrayList<int[]>();
+	
+	
+	//May need to edit king possible move methods.Specifically taking another piece ONLY if that spot will not then in turn be taken.
+	//Possible create arraylist to keep track of alive pieces and loop through each one to see if it can take king if king moves there.
+	
+	//or first create list of spots possible to move to as per usual. Then check of those spots if it can be taken by another colour piece remove it from list.
+	// for each possible spot check if any opponent colour piece can move there.
 	
 	//0 for black, 1 for white
 	
@@ -387,6 +421,7 @@ public class ChessBoard {
 			//return null;
 			return m_PossibleMovesVerticalBackward;
 		}
+		
 		else{
 			int[] point = new int[2];
 			point[0]=startRow-1;
@@ -400,5 +435,511 @@ public class ChessBoard {
 		
 	}
 	
+	private List<int[]> checkVerticalForwardOneBox(String startPieceColour,int startRow, int startColumn){
+		if(startRow == 7){
+			return m_PossibleMovesSingleBoxVerticalForward;
+		}else if(pieceOfOwnColourOnBox(startPieceColour,startRow+1,startColumn)){
+			return m_PossibleMovesSingleBoxVerticalForward;
+			
+			
+			
+		}else if(pieceofOpposingColourOnBox(startPieceColour,startRow+1,startColumn)){
+			int[] point = new int[2];
+			point[0]=startRow+1;
+			point[1]=startColumn;
+			m_PossibleMovesSingleBoxVerticalForward.add(point);
+			//return null;
+			return m_PossibleMovesSingleBoxVerticalForward;
+		}
+		
+		else{
+			int[] point = new int[2];
+			point[0]=startRow+1;
+			point[1]=startColumn;
+			m_PossibleMovesSingleBoxVerticalForward.add(point);
+			
+			return m_PossibleMovesSingleBoxVerticalForward;
+		}
+			
+	}
+		
+		private List<int[]> checkVerticalBackwardOneBox(String startPieceColour,int startRow, int startColumn){
+			if(startRow == 0){
+				return m_PossibleMovesSingleBoxVerticalBackward;
+			}else if(pieceOfOwnColourOnBox(startPieceColour,startRow-1,startColumn)){
+				return m_PossibleMovesSingleBoxVerticalBackward;
+				
+				
+				
+			}else if(pieceofOpposingColourOnBox(startPieceColour,startRow-1,startColumn)){
+				int[] point = new int[2];
+				point[0]=startRow-1;
+				point[1]=startColumn;
+				m_PossibleMovesSingleBoxVerticalBackward.add(point);
+				//return null;
+				return m_PossibleMovesSingleBoxVerticalBackward;
+			}
+			
+			else{
+				int[] point = new int[2];
+				point[0]=startRow-1;
+				point[1]=startColumn;
+				m_PossibleMovesSingleBoxVerticalBackward.add(point);
+				
+				return m_PossibleMovesSingleBoxVerticalBackward;
+				
+			}
+			
+	}
+		
+		private List<int[]> checkHorizontalRightOneBox(String startPieceColour,int startRow, int startColumn){
+			if(startColumn == 7){
+				return m_PossibleMovesSingleBoxHorizontalRight;
+			}else if(pieceOfOwnColourOnBox(startPieceColour,startRow,startColumn+1)){
+				return m_PossibleMovesSingleBoxHorizontalRight;
+				
+				
+				
+			}else if(pieceofOpposingColourOnBox(startPieceColour,startRow,startColumn+1)){
+				int[] point = new int[2];
+				point[0]=startRow;
+				point[1]=startColumn+1;
+				m_PossibleMovesSingleBoxHorizontalRight.add(point);
+				//return null;
+				return m_PossibleMovesSingleBoxHorizontalRight;
+			}
+			
+			else{
+				int[] point = new int[2];
+				point[0]=startRow;
+				point[1]=startColumn+1;
+				m_PossibleMovesSingleBoxHorizontalRight.add(point);
+				
+				return m_PossibleMovesSingleBoxHorizontalRight;
+				
+			}
+			
+	}
+		
+		private List<int[]> checkHorizontalLeftOneBox(String startPieceColour,int startRow, int startColumn){
+			if(startColumn == 0){
+				return m_PossibleMovesSingleBoxHorizontalLeft;
+			}else if(pieceOfOwnColourOnBox(startPieceColour,startRow,startColumn-1)){
+				return m_PossibleMovesSingleBoxHorizontalLeft;
+				
+				
+				
+			}else if(pieceofOpposingColourOnBox(startPieceColour,startRow,startColumn-1)){
+				int[] point = new int[2];
+				point[0]=startRow;
+				point[1]=startColumn-1;
+				m_PossibleMovesSingleBoxHorizontalLeft.add(point);
+				//return null;
+				return m_PossibleMovesSingleBoxHorizontalLeft;
+			}
+			
+			else{
+				int[] point = new int[2];
+				point[0]=startRow;
+				point[1]=startColumn-1;
+				m_PossibleMovesSingleBoxHorizontalLeft.add(point);
+				
+				return m_PossibleMovesSingleBoxHorizontalLeft;
+				
+			}
+			
+	}
+		
+		private List<int[]> checkDiagonalForwardRightOneBox(String startPieceColour,int startRow, int startColumn){
+			if(startRow == 7 || startColumn == 7){
+				return m_PossibleMovesSingleBoxDiagonalForwardRight;
+			}else if(pieceOfOwnColourOnBox(startPieceColour,startRow+1,startColumn+1)){
+				return m_PossibleMovesSingleBoxDiagonalForwardRight;
+				
+				
+				
+			}else if(pieceofOpposingColourOnBox(startPieceColour,startRow+1,startColumn+1)){
+				int[] point = new int[2];
+				point[0]=startRow+1;
+				point[1]=startColumn+1;
+				m_PossibleMovesSingleBoxDiagonalForwardRight.add(point);
+				//return null;
+				return m_PossibleMovesSingleBoxDiagonalForwardRight;
+			}
+			
+			else{
+				int[] point = new int[2];
+				point[0]=startRow+1;
+				point[1]=startColumn+1;
+				m_PossibleMovesSingleBoxDiagonalForwardRight.add(point);
+				
+				return m_PossibleMovesSingleBoxDiagonalForwardRight;
+				
+			}
+			
+	}
 	
+		private List<int[]> checkDiagonalBackwardRightOneBox(String startPieceColour,int startRow, int startColumn){
+			if(startRow == 0 || startColumn == 7){
+				return m_PossibleMovesSingleBoxDiagonalBackwardRight;
+			}else if(pieceOfOwnColourOnBox(startPieceColour,startRow-1,startColumn+1)){
+				return m_PossibleMovesSingleBoxDiagonalBackwardRight;
+				
+				
+				
+			}else if(pieceofOpposingColourOnBox(startPieceColour,startRow-1,startColumn+1)){
+				int[] point = new int[2];
+				point[0]=startRow-1;
+				point[1]=startColumn+1;
+				m_PossibleMovesSingleBoxDiagonalBackwardRight.add(point);
+				//return null;
+				return m_PossibleMovesSingleBoxDiagonalBackwardRight;
+			}
+			
+			else{
+				int[] point = new int[2];
+				point[0]=startRow-1;
+				point[1]=startColumn+1;
+				m_PossibleMovesSingleBoxDiagonalBackwardRight.add(point);
+				
+				return m_PossibleMovesSingleBoxDiagonalBackwardRight;
+				
+			}
+			
+	}
+		private List<int[]> checkDiagonalForwardLeftOneBox(String startPieceColour,int startRow, int startColumn){
+			if(startRow == 7 || startColumn == 0){
+				return m_PossibleMovesSingleBoxDiagonalForwardLeft;
+			}else if(pieceOfOwnColourOnBox(startPieceColour,startRow+1,startColumn-1)){
+				return m_PossibleMovesSingleBoxDiagonalForwardLeft;
+				
+				
+				
+			}else if(pieceofOpposingColourOnBox(startPieceColour,startRow+1,startColumn-1)){
+				int[] point = new int[2];
+				point[0]=startRow+1;
+				point[1]=startColumn-1;
+				m_PossibleMovesSingleBoxDiagonalForwardLeft.add(point);
+				//return null;
+				return m_PossibleMovesSingleBoxDiagonalForwardLeft;
+			}
+			
+			else{
+				int[] point = new int[2];
+				point[0]=startRow+1;
+				point[1]=startColumn-1;
+				m_PossibleMovesSingleBoxDiagonalForwardLeft.add(point);
+				
+				return m_PossibleMovesSingleBoxDiagonalForwardLeft;
+				
+			}
+			
+	}
+		
+		private List<int[]> checkDiagonalBackwardLeftOneBox(String startPieceColour,int startRow, int startColumn){
+			if(startRow == 0 || startColumn == 0){
+				return m_PossibleMovesSingleBoxDiagonalBackwardLeft;
+			}else if(pieceOfOwnColourOnBox(startPieceColour,startRow-1,startColumn-1)){
+				return m_PossibleMovesSingleBoxDiagonalBackwardLeft;
+				
+				
+				
+			}else if(pieceofOpposingColourOnBox(startPieceColour,startRow-1,startColumn-1)){
+				int[] point = new int[2];
+				point[0]=startRow-1;
+				point[1]=startColumn-1;
+				m_PossibleMovesSingleBoxDiagonalBackwardLeft.add(point);
+				//return null;
+				return m_PossibleMovesSingleBoxDiagonalBackwardLeft;
+			}
+			
+			else{
+				int[] point = new int[2];
+				point[0]=startRow-1;
+				point[1]=startColumn-1;
+				m_PossibleMovesSingleBoxDiagonalBackwardLeft.add(point);
+				
+				return m_PossibleMovesSingleBoxDiagonalBackwardLeft;
+				
+			}
+			
+	}
+	
+		private List<int[]> checkPawnForwardOneBox(String startPieceColour,int startRow, int startColumn){
+			if(startRow == 7){
+				return m_PossibleMovesPawnVerticalForward;
+			}else if(pieceOfOwnColourOnBox(startPieceColour,startRow+1,startColumn)){
+				return m_PossibleMovesPawnVerticalForward;
+				
+				
+				
+			}else if(pieceofOpposingColourOnBox(startPieceColour,startRow+1,startColumn)){
+				
+				
+				return m_PossibleMovesPawnVerticalForward;
+			}
+			
+			else{
+				int[] point = new int[2];
+				point[0]=startRow+1;
+				point[1]=startColumn;
+				m_PossibleMovesPawnVerticalForward.add(point);
+				
+				return m_PossibleMovesPawnVerticalForward;
+			}
+				
+		}
+		
+		private List<int[]> checkPawnForwardFirstMoveWithPiece(String startPieceColour,int startRow, int startColumn){
+			
+				//First move of each pawn  and thus impossible for pawns of 
+			
+				int[] point = new int[2];
+				point[0]=startRow+1;
+				point[1]=startColumn;
+				m_PossibleMovesPawnVerticalForwardFirstMoveWithPiece.add(point);
+				
+				point = new int[2];
+				point[0]=startRow+2;
+				point[1]=startColumn;
+				m_PossibleMovesPawnVerticalForwardFirstMoveWithPiece.add(point);
+				
+				
+				return m_PossibleMovesPawnVerticalForwardFirstMoveWithPiece;
+			
+				
+		}
+		
+		private List<int[]> checkPawnForwardDiagonalRight(String startPieceColour,int startRow, int startColumn){
+			if(startRow == 7||startColumn==7){
+				return m_PossibleMovesPawnDiagonalForwardRight;
+			}else if(pieceOfOwnColourOnBox(startPieceColour,startRow+1,startColumn+1)){
+				return m_PossibleMovesPawnDiagonalForwardRight;
+				
+				
+				
+			}else if(pieceofOpposingColourOnBox(startPieceColour,startRow+1,startColumn+1)){
+				int[] point = new int[2];
+				point[0]=startRow+1;
+				point[1]=startColumn+1;
+				
+				return m_PossibleMovesPawnDiagonalForwardRight;
+			}
+			
+			else{
+				//Nothing on box can't attack there.
+				
+				return m_PossibleMovesPawnDiagonalForwardRight;
+			}
+				
+		}
+		
+		private List<int[]> checkKnightJump1ForwardRight(String startPieceColour,int startRow, int startColumn){
+			if(startRow >= 6||startColumn==7){
+				return m_PossibleMovesKnightJump1ForwardRight;
+			}else if(pieceOfOwnColourOnBox(startPieceColour,startRow+2,startColumn+1)){
+				return m_PossibleMovesKnightJump1ForwardRight;
+				
+				
+				
+			}else if(pieceofOpposingColourOnBox(startPieceColour,startRow+2,startColumn+1)){
+				int[] point = new int[2];
+				point[0]=startRow+2;
+				point[1]=startColumn+1;
+				
+				return m_PossibleMovesKnightJump1ForwardRight;
+			}
+			
+			else{
+				int[] point = new int[2];
+				point[0]=startRow+2;
+				point[1]=startColumn+1;
+				
+				return m_PossibleMovesKnightJump1ForwardRight;
+			}
+				
+		}
+		
+		private List<int[]> checkKnightJump1ForwardLeft(String startPieceColour,int startRow, int startColumn){
+			if(startRow >= 6||startColumn==0){
+				return m_PossibleMovesKnightJump1ForwardLeft;
+			}else if(pieceOfOwnColourOnBox(startPieceColour,startRow+2,startColumn-1)){
+				return m_PossibleMovesKnightJump1ForwardLeft;
+				
+				
+				
+			}else if(pieceofOpposingColourOnBox(startPieceColour,startRow+2,startColumn-1)){
+				int[] point = new int[2];
+				point[0]=startRow+2;
+				point[1]=startColumn-1;
+				
+				return m_PossibleMovesKnightJump1ForwardLeft;
+			}
+			
+			else{
+				int[] point = new int[2];
+				point[0]=startRow+2;
+				point[1]=startColumn-1;
+				
+				return m_PossibleMovesKnightJump1ForwardLeft;
+			}
+				
+		}
+		
+		private List<int[]> checkKnightJump1BackwardRight(String startPieceColour,int startRow, int startColumn){
+			if(startRow <= 1||startColumn==7){
+				return m_PossibleMovesKnightJump1BackwardRight;
+			}else if(pieceOfOwnColourOnBox(startPieceColour,startRow-2,startColumn+1)){
+				return m_PossibleMovesKnightJump1BackwardRight;
+				
+				
+				
+			}else if(pieceofOpposingColourOnBox(startPieceColour,startRow-2,startColumn+1)){
+				int[] point = new int[2];
+				point[0]=startRow-2;
+				point[1]=startColumn+1;
+				
+				return m_PossibleMovesKnightJump1BackwardRight;
+			}
+			
+			else{
+				int[] point = new int[2];
+				point[0]=startRow-2;
+				point[1]=startColumn+1;
+				
+				return m_PossibleMovesKnightJump1BackwardRight;
+			}
+				
+		}
+		
+		private List<int[]> checkKnightJump1BackwardLeft(String startPieceColour,int startRow, int startColumn){
+			if(startRow <= 1||startColumn==0){
+				return m_PossibleMovesKnightJump1BackwardLeft;
+			}else if(pieceOfOwnColourOnBox(startPieceColour,startRow-2,startColumn-1)){
+				return m_PossibleMovesKnightJump1BackwardLeft;
+				
+				
+				
+			}else if(pieceofOpposingColourOnBox(startPieceColour,startRow-2,startColumn-1)){
+				int[] point = new int[2];
+				point[0]=startRow-2;
+				point[1]=startColumn-1;
+				
+				return m_PossibleMovesKnightJump1BackwardLeft;
+			}
+			
+			else{
+				int[] point = new int[2];
+				point[0]=startRow-2;
+				point[1]=startColumn-1;
+				
+				return m_PossibleMovesKnightJump1BackwardLeft;
+			}
+				
+		}
+		
+		private List<int[]> checkKnightJump2ForwardRight(String startPieceColour,int startRow, int startColumn){
+			if(startRow == 7||startColumn>=6){
+				return m_PossibleMovesKnightJump2ForwardRight;
+			}else if(pieceOfOwnColourOnBox(startPieceColour,startRow+1,startColumn+2)){
+				return m_PossibleMovesKnightJump2ForwardRight;
+				
+				
+				
+			}else if(pieceofOpposingColourOnBox(startPieceColour,startRow+1,startColumn+2)){
+				int[] point = new int[2];
+				point[0]=startRow+1;
+				point[1]=startColumn+2;
+				
+				return m_PossibleMovesKnightJump2ForwardRight;
+			}
+			
+			else{
+				int[] point = new int[2];
+				point[0]=startRow+1;
+				point[1]=startColumn+2;
+				
+				return m_PossibleMovesKnightJump2ForwardRight;
+			}
+				
+		}
+		
+		private List<int[]> checkKnightJump2ForwardLeft(String startPieceColour,int startRow, int startColumn){
+			if(startRow == 7||startColumn<=1){
+				return m_PossibleMovesKnightJump2ForwardLeft;
+			}else if(pieceOfOwnColourOnBox(startPieceColour,startRow+1,startColumn-2)){
+				return m_PossibleMovesKnightJump2ForwardLeft;
+				
+				
+				
+			}else if(pieceofOpposingColourOnBox(startPieceColour,startRow+1,startColumn-2)){
+				int[] point = new int[2];
+				point[0]=startRow+1;
+				point[1]=startColumn-2;
+				
+				return m_PossibleMovesKnightJump2ForwardLeft;
+			}
+			
+			else{
+				int[] point = new int[2];
+				point[0]=startRow+1;
+				point[1]=startColumn-2;
+				
+				return m_PossibleMovesKnightJump2ForwardLeft;
+			}
+				
+		}
+		
+		private List<int[]> checkKnightJump2BackwardRight(String startPieceColour,int startRow, int startColumn){
+			if(startRow == 0||startColumn>=6){
+				return m_PossibleMovesKnightJump2BackwardRight;
+			}else if(pieceOfOwnColourOnBox(startPieceColour,startRow-1,startColumn+2)){
+				return m_PossibleMovesKnightJump2BackwardRight;
+				
+				
+				
+			}else if(pieceofOpposingColourOnBox(startPieceColour,startRow-1,startColumn+2)){
+				int[] point = new int[2];
+				point[0]=startRow-1;
+				point[1]=startColumn+2;
+				
+				return m_PossibleMovesKnightJump2BackwardRight;
+			}
+			
+			else{
+				int[] point = new int[2];
+				point[0]=startRow-1;
+				point[1]=startColumn+2;
+				
+				return m_PossibleMovesKnightJump2BackwardRight;
+			}
+				
+		}
+		
+		private List<int[]> checkKnightJump2BackwardLeft(String startPieceColour,int startRow, int startColumn){
+			if(startRow == 0||startColumn<=1){
+				return m_PossibleMovesKnightJump2BackwardRight;
+			}else if(pieceOfOwnColourOnBox(startPieceColour,startRow-1,startColumn-2)){
+				return m_PossibleMovesKnightJump2BackwardRight;
+				
+				
+				
+			}else if(pieceofOpposingColourOnBox(startPieceColour,startRow-1,startColumn-2)){
+				int[] point = new int[2];
+				point[0]=startRow-1;
+				point[1]=startColumn-2;
+				
+				return m_PossibleMovesKnightJump2BackwardRight;
+			}
+			
+			else{
+				int[] point = new int[2];
+				point[0]=startRow-1;
+				point[1]=startColumn-2;
+				
+				return m_PossibleMovesKnightJump2BackwardRight;
+			}
+				
+		}
+		
 }

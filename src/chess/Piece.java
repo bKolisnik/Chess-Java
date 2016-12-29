@@ -15,10 +15,7 @@ public abstract class Piece {
 	//Override rendering methods in subclasses with different images
 	
 
-	public void paint(Graphics g, int x, int y) {
-		// TODO Auto-generated method stub
-		
-	}
+	public abstract void paint(Graphics g, int x, int y);
 
 	
 }
