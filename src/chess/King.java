@@ -11,8 +11,5 @@ public class King extends Piece{
 		
 	}
 
-	@Override
-	public void paint(Graphics g, int x, int y){
-		
-	}
+	
 }

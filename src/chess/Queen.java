@@ -9,8 +9,5 @@ public class Queen extends Piece {
 		
 	}
 
-	@Override
-	public void paint(Graphics g, int x, int y){
-		
-	}
+	
 }

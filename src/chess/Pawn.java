@@ -11,10 +11,7 @@ public class Pawn extends Piece {
 		
 	}
 
-	@Override
-	public void paint(Graphics g, int x, int y){
-		
-	}
+	
 	
 	//make getters and setters for the boolean
 	

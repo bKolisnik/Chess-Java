@@ -2,7 +2,11 @@ package chess;
 
 import java.awt.Graphics;
 
+import java.awt.image.BufferedImage;
+
 public abstract class Piece {
+	
+	private BufferedImage m_pieceImg;
 
 	String m_colour;
 	
@@ -13,9 +17,15 @@ public abstract class Piece {
 	}
 	
 	//Override rendering methods in subclasses with different images
+	public void setImage(BufferedImage img){
+		this.m_pieceImg = img;
+	}
 	
+	public BufferedImage getImage(){
+		return this.m_pieceImg;
+	}
 
-	public abstract void paint(Graphics g, int x, int y);
+	//Render all pieces in jpanel section by using g.drawImage(the piece image, x,y,with,height,jpanel)
 
 	
 }

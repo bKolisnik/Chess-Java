@@ -1,6 +1,10 @@
 package chess;
 
- 
+import java.io.IOException;
+import java.net.URL;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class Game{
 
@@ -18,6 +22,8 @@ public class Game{
 		m_player2 = player2;
 		
 		initializePieces();
+		
+		//Start gameloop
 		
 		
 		
@@ -67,9 +73,18 @@ public class Game{
 	public static void main(String[] args){
 		Player player1 = new Player("white");
 		Player player2 = new Player("black");
-		ChessBoard chessBoard = new ChessBoard();
+		Window window = new Window();
+		ChessBoard chessBoard = new ChessBoard(window);
 		
+		window.setChessBoard(chessBoard);
 		Game game = new Game(chessBoard,player1,player2);
+		
+		
+		Frame frame = new Frame(chessBoard,window);
+		
+		chessBoard.printChessBoard();
+		
+		
 		
 		//Implement turns
 		

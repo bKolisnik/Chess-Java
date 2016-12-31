@@ -4,14 +4,16 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.swing.JPanel;
 
-public class ChessBoard {
+
+public class ChessBoard  {
 	
 	Box[][] m_boxes;
 	private Boolean m_rowEven;
 	private List<Piece> m_removedPieces = new ArrayList<Piece>();
 	
-	//keep fields private use getters and setters to retieve and alter from other objects.
+	//keep fields private use getters and setters to retrieve and alter from other objects.
 	
 	//Diagonal
 	private List<int[]>m_PossibleMovesDiagonalForwardRight = new ArrayList<int[]>();
@@ -60,20 +62,45 @@ public class ChessBoard {
 	
 	//0 for black, 1 for white
 	
-	public ChessBoard(){
+	public ChessBoard(JPanel window){
 		
-		initializeChessBoard();
+		initializeChessBoard(window);
 		
 	}
 	
-	private void initializeChessBoard(){
-		initializeBoard();
+	private void initializeChessBoard(JPanel window){
+		initializeBoard(window);
 		//initializePieces();
+		
+		
+		
 	}
 	
+	public void printChessBoard(){
+		for (int i = 0; i < 8; i++){
+			for(int j = 0; j< 8; j++){
+				if(m_boxes[i][j].m_piece!= null){
+					if(j<7){
+						System.out.print("P");
+					}else{
+						System.out.print("P\n");
+					}
+					
+				}else {
+					if(j<7){
+						System.out.print("O");
+					}else{
+						System.out.print("O\n");
+					}
+					
+				}
+				
+				
+			}
+		}
+	}
 	
-	
-	private void initializeBoard(){
+	private void initializeBoard(JPanel window){
 		
 		m_boxes = new Box[8][8];
 		
@@ -91,7 +118,7 @@ public class ChessBoard {
 				
 				if(j%2==0){
 					if(m_rowEven){
-						Box box = new Box(null,1,(32*8 - (i+1)*32),j*32);
+						Box box = new Box(null,1,(50*8 - (i+1)*50),j*50,window);
 						m_boxes[i][j]=box;
 						if(j<7){
 							System.out.print("1");
@@ -101,7 +128,7 @@ public class ChessBoard {
 						}
 					}
 					else{
-						Box box = new Box(null,0, (32*8 - (i+1)*32),j*32);
+						Box box = new Box(null,0, (50*8 - (i+1)*50),j*50,window);
 						m_boxes[i][j]=box;
 						
 						if(j<7){
@@ -114,7 +141,7 @@ public class ChessBoard {
 				}
 				else{
 					if(m_rowEven){
-						Box box = new Box(null,0,(32*8 - (i+1)*32),j*32);
+						Box box = new Box(null,0,(50*8 - (i+1)*50),j*50,window);
 						m_boxes[i][j] = box;
 						
 						if(j<7){
@@ -126,7 +153,7 @@ public class ChessBoard {
 						
 					}
 					else{
-						Box box = new Box(null,1,(32*8 - (i+1)*32),j*32);
+						Box box = new Box(null,1,(50*8 - (i+1)*50),j*50,window);
 						m_boxes[i][j]=box;
 						
 						if(j<7){
