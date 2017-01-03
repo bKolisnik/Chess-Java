@@ -133,6 +133,12 @@ public class Window extends JPanel implements MouseListener {
 			if(m_chessBoard.m_boxes[boxRow][boxColumn].getPossible()){
 				m_chessBoard.movePiece(m_chessBoard.m_boxes[firstCoord[0]][firstCoord[1]].m_piece.getColour(), firstCoord[0], firstCoord[1], boxRow, boxColumn);
 				
+				if(m_chessBoard.m_boxes[boxRow][boxColumn].m_piece instanceof Pawn){
+					if(!((Pawn)m_chessBoard.m_boxes[boxRow][boxColumn].m_piece).hadFirstMove()){
+						((Pawn) m_chessBoard.m_boxes[boxRow][boxColumn].m_piece).completedFirstMove();
+					}
+				}
+				
 				m_turn= m_turn+1;
 				
 				if(m_turn%2==0){
@@ -160,7 +166,21 @@ public class Window extends JPanel implements MouseListener {
 				repaint();
 				
 			}else{
-			repaint();
+			m_chessBoard.m_boxes[firstCoord[0]][firstCoord[1]].setSelected(false);
+			System.out.println("Deselected");
+			
+			for(int[] possibleMove: m_possibleMoves){
+				
+				int possibleRow = possibleMove[0];
+				int possibleColumn = possibleMove[1];
+				
+				
+				
+				m_chessBoard.m_boxes[possibleRow][possibleColumn].setPossible(false);
+				repaint();
+				
+				
+			}
 			
 			}
 			
@@ -227,12 +247,12 @@ public class Window extends JPanel implements MouseListener {
 				
 				if(!((Pawn) m_chessBoard.m_boxes[boxRow][boxColumn].m_piece).hadFirstMove()){
 					possibleMoves.addAll(m_chessBoard.checkPawnForwardFirstMoveWithPieceWhite(colour, boxRow, boxColumn));
-					((Pawn) m_chessBoard.m_boxes[boxRow][boxColumn].m_piece).completedFirstMove();
+					
 				}
 				else{
-					System.out.println(possibleMoves.toString());
+					
 					possibleMoves.addAll(m_chessBoard.checkPawnForwardOneBoxWhite(colour, boxRow, boxColumn));
-					System.out.println(possibleMoves.toString());
+					
 				}
 				
 				

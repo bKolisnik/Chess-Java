@@ -25,7 +25,7 @@ public class Frame {
 		System.out.println("Launched");
 		
 		//this
-		url = this.getClass().getResource("Chess_Pieces_SpriteSmall.png");
+		url = this.getClass().getResource("chess_pieces_sprite-svg.png");
 		
 		if(url==null){
 			System.out.println("No file found");
