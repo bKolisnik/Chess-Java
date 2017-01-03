@@ -41,8 +41,8 @@ public class Game{
 		m_chessBoard.m_boxes[7][0].m_piece = new Rook("black");
 		m_chessBoard.m_boxes[7][1].m_piece = new Knight("black");
 		m_chessBoard.m_boxes[7][2].m_piece = new Bishop("black");
-		m_chessBoard.m_boxes[7][3].m_piece = new Queen("black");
-		m_chessBoard.m_boxes[7][4].m_piece = new King("black");
+		m_chessBoard.m_boxes[7][3].m_piece = new King("black");
+		m_chessBoard.m_boxes[7][4].m_piece = new Queen("black");
 		m_chessBoard.m_boxes[7][5].m_piece = new Bishop("black");
 		m_chessBoard.m_boxes[7][6].m_piece = new Knight("black");
 		m_chessBoard.m_boxes[7][7].m_piece = new Rook("black");
@@ -57,8 +57,8 @@ public class Game{
 		m_chessBoard.m_boxes[0][0].m_piece = new Rook("white");
 		m_chessBoard.m_boxes[0][1].m_piece = new Knight("white");
 		m_chessBoard.m_boxes[0][2].m_piece = new Bishop("white");
-		m_chessBoard.m_boxes[0][3].m_piece = new Queen("white");
-		m_chessBoard.m_boxes[0][4].m_piece = new King("white");
+		m_chessBoard.m_boxes[0][3].m_piece = new King("white");
+		m_chessBoard.m_boxes[0][4].m_piece = new Queen("white");
 		m_chessBoard.m_boxes[0][5].m_piece = new Bishop("white");
 		m_chessBoard.m_boxes[0][6].m_piece = new Knight("white");
 		m_chessBoard.m_boxes[0][7].m_piece = new Rook("white");
@@ -82,7 +82,7 @@ public class Game{
 		
 		Frame frame = new Frame(chessBoard,window);
 		
-		chessBoard.printChessBoard();
+		
 		
 		
 		

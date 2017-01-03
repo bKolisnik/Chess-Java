@@ -8,7 +8,7 @@ public abstract class Piece {
 	
 	private BufferedImage m_pieceImg;
 
-	String m_colour;
+	private String m_colour;
 	
 	public Piece(String colour){
 		
@@ -27,5 +27,8 @@ public abstract class Piece {
 
 	//Render all pieces in jpanel section by using g.drawImage(the piece image, x,y,with,height,jpanel)
 
-	
+	public String getColour(){
+		return m_colour;
+		
+	}
 }

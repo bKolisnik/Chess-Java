@@ -1,27 +1,33 @@
 package chess;
 
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class Frame {
 	public Frame(ChessBoard chessBoard, JPanel window){
-	
-		URL sample;
+		
+		JLabel turnLbl = new JLabel("Turn:");
+		JLabel turnLblPlayer=new JLabel("White");
+		
+		
+		URL url;
 		JFrame frame = new JFrame("Chess");
-		frame.setSize(420,440);
+		frame.setSize(500,440);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		System.out.println("Launched");
 		
 		//this
-		sample = this.getClass().getResource("Chess_Pieces_SpriteSmall.png");
+		url = this.getClass().getResource("Chess_Pieces_SpriteSmall.png");
 		
-		if(sample==null){
+		if(url==null){
 			System.out.println("No file found");
 			System.exit(0);
 		}
@@ -30,7 +36,7 @@ public class Frame {
 		
 		
 		try {
-			chessSheet = ImageIO.read(sample);
+			chessSheet = ImageIO.read(url);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -39,7 +45,6 @@ public class Frame {
 		BufferedImage blackPawn = chessSheet.getSubimage(250, 50, 50, 50);
 		BufferedImage whiteRook = chessSheet.getSubimage(200, 0, 50, 50);
 		BufferedImage blackRook = chessSheet.getSubimage(200,50 ,50 ,50 );
-		
 		BufferedImage whiteKnight = chessSheet.getSubimage(150, 0, 50, 50);
 		BufferedImage blackKnight = chessSheet.getSubimage(150, 50, 50, 50);
 		BufferedImage whiteBishop = chessSheet.getSubimage(100, 0, 50, 50);
@@ -87,10 +92,18 @@ public class Frame {
 		frame.setVisible(true);
 		
 		window.setBounds(0, 0, frame.WIDTH, frame.HEIGHT);
+		window.setLayout(null);
 		frame.add(window);
+		//turnLbl.setSize(20,20);
+		//turnLblPlayer.setSize(20,20);
+		//window.add(turnLbl);
+		//window.add(turnLblPlayer);
+		//turnLbl.setBounds(415,20,40,40);
+		//turnLblPlayer.setBounds(415,40,40,40);
+		
 		frame.getContentPane().repaint();
 		frame.validate();
 		
-		
+		frame.addMouseListener((MouseListener) window);
 	}
 }
