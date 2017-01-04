@@ -73,8 +73,8 @@ public class Frame {
 		chessBoard.m_boxes[0][0].m_piece.setImage(whiteRook);
 		chessBoard.m_boxes[0][1].m_piece.setImage(whiteKnight);
 		chessBoard.m_boxes[0][2].m_piece.setImage(whiteBishop);
-		chessBoard.m_boxes[0][3].m_piece.setImage(whiteKing);
-		chessBoard.m_boxes[0][4].m_piece.setImage(whiteQueen);
+		chessBoard.m_boxes[0][3].m_piece.setImage(whiteQueen);
+		chessBoard.m_boxes[0][4].m_piece.setImage(whiteKing);
 		chessBoard.m_boxes[0][5].m_piece.setImage(whiteBishop);
 		chessBoard.m_boxes[0][6].m_piece.setImage(whiteKnight);
 		chessBoard.m_boxes[0][7].m_piece.setImage(whiteRook);
@@ -82,8 +82,8 @@ public class Frame {
 		chessBoard.m_boxes[7][0].m_piece.setImage(blackRook);
 		chessBoard.m_boxes[7][1].m_piece.setImage(blackKnight);
 		chessBoard.m_boxes[7][2].m_piece.setImage(blackBishop);
-		chessBoard.m_boxes[7][3].m_piece.setImage(blackKing);
-		chessBoard.m_boxes[7][4].m_piece.setImage(blackQueen);
+		chessBoard.m_boxes[7][3].m_piece.setImage(blackQueen);
+		chessBoard.m_boxes[7][4].m_piece.setImage(blackKing);
 		chessBoard.m_boxes[7][5].m_piece.setImage(blackBishop);
 		chessBoard.m_boxes[7][6].m_piece.setImage(blackKnight);
 		chessBoard.m_boxes[7][7].m_piece.setImage(blackRook);

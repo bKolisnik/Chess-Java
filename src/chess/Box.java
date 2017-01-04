@@ -34,7 +34,7 @@ public class Box {
 	public void paint(Graphics g){
 		
 		if(m_colour==0){
-			g.setColor(Color.gray);
+			g.setColor(Color.white);
 			g.fillRect(m_column, m_row, 50, 50);
 			
 			
@@ -56,7 +56,7 @@ public class Box {
 			
 		}
 		else{
-			g.setColor(Color.white);
+			g.setColor(Color.gray);
 			g.fillRect(m_column, m_row, 50, 50);
 			
 			if(m_piece!= null&&m_piece.getImage()!=null){

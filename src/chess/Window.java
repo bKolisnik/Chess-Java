@@ -22,6 +22,10 @@ public class Window extends JPanel implements MouseListener {
 	private List<int[]> m_possibleMoves = new ArrayList<int[]>();
 	
 	private int m_turn = 1;
+	private boolean m_whiteInCheck = false;
+	private boolean m_blackInCheck = false;
+	
+	private List<int[]> possibleMoveLeadToCheck = new ArrayList<int[]>();
 	
 	
 	JLabel turnLbl = new JLabel("Turn:");
@@ -183,6 +187,75 @@ public class Window extends JPanel implements MouseListener {
 					}
 					
 				}
+				
+				
+//If I am still in check after i have moved i lose.
+				
+				//Check for if we have opposing player in check. Brute force by checking all possible moves our pieces will have 
+				//at the beginning of next turn. If there is a king on that box the opposing player is in check.
+				
+				
+				for(int i = 0; i < 8; i++){
+					for(int j = 0; j < 8; j++){
+						if(m_chessBoard.m_boxes[i][j].m_piece!=null){
+							if(m_chessBoard.m_boxes[i][j].m_piece.getColour()=="white"&&m_turn%2!=0){
+								
+								possibleMoveLeadToCheck= getPossibleMoves("white", i, j);
+								if(!possibleMoveLeadToCheck.isEmpty()){
+									for(int[] possibleMove: possibleMoveLeadToCheck){
+								
+									
+									int possibleRow = possibleMove[0];
+									int possibleColumn = possibleMove[1];
+									
+									
+									if(m_chessBoard.m_boxes[possibleRow][possibleColumn].m_piece!=null){
+										if(m_chessBoard.m_boxes[possibleRow][possibleColumn].m_piece.getColour().equals("black")&&m_chessBoard.m_boxes[possibleRow][possibleColumn].m_piece instanceof King){
+											System.out.println("blackincheck");
+											m_blackInCheck = true;
+											break;
+											
+										}
+									}
+									
+									
+									
+								}
+								
+								
+							}else if(m_chessBoard.m_boxes[i][j].m_piece.getColour()=="black"&&m_turn%2==0){
+								
+								possibleMoveLeadToCheck= getPossibleMoves("black", i, j);
+								if(!m_possibleMoves.isEmpty()){
+									for(int[] possibleMove: possibleMoveLeadToCheck){
+								
+									
+									int possibleRow = possibleMove[0];
+									int possibleColumn = possibleMove[1];
+									
+									if(m_chessBoard.m_boxes[possibleRow][possibleColumn].m_piece!=null){
+										if(m_chessBoard.m_boxes[possibleRow][possibleColumn].m_piece.getColour().equals("white")&&m_chessBoard.m_boxes[possibleRow][possibleColumn].m_piece instanceof King){
+											System.out.println("whiteincheck");
+											m_whiteInCheck = true;
+											break;
+											
+										}
+									}
+									
+									
+									
+								}
+								
+							}
+						}
+					}
+				}
+			}	
+		}
+				//m_possibleMoves.clear();
+				possibleMoveLeadToCheck.clear();
+				
+				
 				
 				m_turn= m_turn+1;
 				
