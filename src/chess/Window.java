@@ -23,6 +23,7 @@ public class Window extends JPanel implements MouseListener {
 	
 	private int m_turn = 1;
 	
+	
 	JLabel turnLbl = new JLabel("Turn:");
 	JLabel turnLblPlayer=new JLabel("White");
 	
@@ -167,6 +168,22 @@ public class Window extends JPanel implements MouseListener {
 					
 				}
 				
+				for(int i = 0; i < 8; i++){
+					for(int j = 0; j < 8; j++){
+						if(m_chessBoard.m_boxes[i][j].m_piece!=null){
+							if(m_chessBoard.m_boxes[i][j].m_piece instanceof Pawn){
+								if(m_turn%2!=0 &&m_chessBoard.m_boxes[i][j].m_piece.getColour().equals("black")||m_turn%2==0 &&m_chessBoard.m_boxes[i][j].m_piece.getColour().equals("white")){
+									((Pawn)m_chessBoard.m_boxes[i][j].m_piece).setMovedTwo(false);
+									
+								}
+								
+							}
+						}
+						
+					}
+					
+				}
+				
 				m_turn= m_turn+1;
 				
 				if(m_turn%2==0){
@@ -206,21 +223,7 @@ public class Window extends JPanel implements MouseListener {
 				
 				m_chessBoard.m_boxes[possibleRow][possibleColumn].setPossible(false);
 				
-				for(int i = 0; i < 8; i++){
-					for(int j = 0; j < 8; j++){
-						if(m_chessBoard.m_boxes[i][j].m_piece!=null){
-							if(m_chessBoard.m_boxes[i][j].m_piece instanceof Pawn){
-								if(m_turn!=0 &&m_chessBoard.m_boxes[i][j].m_piece.getColour().equals("black")||m_turn==0 &&m_chessBoard.m_boxes[i][j].m_piece.getColour().equals("white")){
-									((Pawn)m_chessBoard.m_boxes[i][j].m_piece).setMovedTwo(false);
-									
-								}
-								
-							}
-						}
-						
-					}
-					
-				}
+				
 				
 				repaint();
 				
