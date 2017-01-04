@@ -80,7 +80,7 @@ public class Window extends JPanel implements MouseListener {
 			m_chessBoard.m_boxes[boxRow][boxColumn].setSelected(true);
 			repaint();
 			
-			
+			//
 			
 			firstCoord[0] = boxRow;
 			firstCoord[1] = boxColumn;
@@ -130,13 +130,41 @@ public class Window extends JPanel implements MouseListener {
 		//If its the second select and its in the possible moves list.
 		if(m_secondSelect){
 			
+			
+			
 			if(m_chessBoard.m_boxes[boxRow][boxColumn].getPossible()){
 				m_chessBoard.movePiece(m_chessBoard.m_boxes[firstCoord[0]][firstCoord[1]].m_piece.getColour(), firstCoord[0], firstCoord[1], boxRow, boxColumn);
+				
+				if(m_chessBoard.m_boxes[boxRow][boxColumn].m_piece instanceof Pawn){
+					if(boxRow-firstCoord[0]==2||firstCoord[0]-boxRow==2){
+						((Pawn)m_chessBoard.m_boxes[boxRow][boxColumn].m_piece).setMovedTwo(true);
+						System.out.println("movedtwo");
+					}
+				}
 				
 				if(m_chessBoard.m_boxes[boxRow][boxColumn].m_piece instanceof Pawn){
 					if(!((Pawn)m_chessBoard.m_boxes[boxRow][boxColumn].m_piece).hadFirstMove()){
 						((Pawn) m_chessBoard.m_boxes[boxRow][boxColumn].m_piece).completedFirstMove();
 					}
+					
+					if(m_turn%2!=0&&m_chessBoard.m_boxes[boxRow-1][boxColumn].m_piece!=null){
+						if(m_chessBoard.m_boxes[boxRow-1][boxColumn].m_piece instanceof Pawn){
+							if(((Pawn)m_chessBoard.m_boxes[boxRow-1][boxColumn].m_piece).justMovedTwo()){
+								m_chessBoard.m_boxes[boxRow-1][boxColumn].m_piece=null;
+								
+							}
+						}
+					}
+					
+					if(m_turn%2==0&&m_chessBoard.m_boxes[boxRow+1][boxColumn].m_piece!=null){
+						if(m_chessBoard.m_boxes[boxRow+1][boxColumn].m_piece instanceof Pawn){
+							if(((Pawn)m_chessBoard.m_boxes[boxRow+1][boxColumn].m_piece).justMovedTwo()){
+								m_chessBoard.m_boxes[boxRow+1][boxColumn].m_piece=null;
+								
+							}
+						}
+					}
+					
 				}
 				
 				m_turn= m_turn+1;
@@ -177,6 +205,23 @@ public class Window extends JPanel implements MouseListener {
 				
 				
 				m_chessBoard.m_boxes[possibleRow][possibleColumn].setPossible(false);
+				
+				for(int i = 0; i < 8; i++){
+					for(int j = 0; j < 8; j++){
+						if(m_chessBoard.m_boxes[i][j].m_piece!=null){
+							if(m_chessBoard.m_boxes[i][j].m_piece instanceof Pawn){
+								if(m_turn!=0 &&m_chessBoard.m_boxes[i][j].m_piece.getColour().equals("black")||m_turn==0 &&m_chessBoard.m_boxes[i][j].m_piece.getColour().equals("white")){
+									((Pawn)m_chessBoard.m_boxes[i][j].m_piece).setMovedTwo(false);
+									
+								}
+								
+							}
+						}
+						
+					}
+					
+				}
+				
 				repaint();
 				
 				
@@ -189,6 +234,8 @@ public class Window extends JPanel implements MouseListener {
 			
 			
 		}
+		
+		
 		
 		if(m_firstSelect == true){
 			m_firstSelect = false;
@@ -241,12 +288,18 @@ public class Window extends JPanel implements MouseListener {
 				m_chessBoard.clearPawnDiagonalForwardRightWhite();
 				m_chessBoard.clearPawnVerticalForwardWhite();
 				m_chessBoard.clearPawnVerticalForwardFirstMoveWithPieceWhite();
+				m_chessBoard.clearPawnEnPassantLeftWhite();
+				m_chessBoard.clearPawnEnPassantRightWhite();
 				
+				possibleMoves.addAll(m_chessBoard.checkPawnEnPassantLeftWhite(colour, boxRow, boxColumn));
+				possibleMoves.addAll(m_chessBoard.checkPawnEnPassantRightWhite(colour, boxRow, boxColumn));
 				possibleMoves.addAll(m_chessBoard.checkPawnForwardDiagonalRightWhite(colour, boxRow, boxColumn));
 				possibleMoves.addAll(m_chessBoard.checkPawnForwardDiagonalLeftWhite(colour, boxRow, boxColumn));
 				
+				
 				if(!((Pawn) m_chessBoard.m_boxes[boxRow][boxColumn].m_piece).hadFirstMove()){
 					possibleMoves.addAll(m_chessBoard.checkPawnForwardFirstMoveWithPieceWhite(colour, boxRow, boxColumn));
+					
 					
 				}
 				else{
@@ -370,9 +423,15 @@ public class Window extends JPanel implements MouseListener {
 				m_chessBoard.clearPawnDiagonalForwardRightBlack();
 				m_chessBoard.clearPawnVerticalForwardBlack();
 				m_chessBoard.clearPawnVerticalForwardFirstMoveWithPieceBlack();
+				m_chessBoard.clearPawnEnPassantLeftBlack();
+				m_chessBoard.clearPawnEnPassantRightBlack();
+				
+				possibleMoves.addAll(m_chessBoard.checkPawnEnPassantLeftBlack(colour, boxRow, boxColumn));
+				possibleMoves.addAll(m_chessBoard.checkPawnEnPassantRightBlack(colour, boxRow, boxColumn));
 				
 				possibleMoves.addAll(m_chessBoard.checkPawnForwardDiagonalRightBlack(colour, boxRow, boxColumn));
 				possibleMoves.addAll(m_chessBoard.checkPawnForwardDiagonalLeftBlack(colour, boxRow, boxColumn));
+				
 				
 				if(!((Pawn) m_chessBoard.m_boxes[boxRow][boxColumn].m_piece).hadFirstMove()){
 					possibleMoves.addAll(m_chessBoard.checkPawnForwardFirstMoveWithPieceBlack(colour, boxRow, boxColumn));

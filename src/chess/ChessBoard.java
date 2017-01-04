@@ -92,6 +92,13 @@ public class ChessBoard  {
 	private List<int[]>m_PossibleMovesKnightJump2BackwardLeftBlack= new ArrayList<int[]>();
 	
 	
+	private List<int[]>m_PossibleMovesPawnEnPassantLeftWhite= new ArrayList<int[]>();
+	private List<int[]>m_PossibleMovesPawnEnPassantRightWhite= new ArrayList<int[]>();
+	
+	private List<int[]>m_PossibleMovesPawnEnPassantLeftBlack= new ArrayList<int[]>();
+	private List<int[]>m_PossibleMovesPawnEnPassantRightBlack= new ArrayList<int[]>();
+	
+	
 	//May need to edit king possible move methods.Specifically taking another piece ONLY if that spot will not then in turn be taken.
 	//Possible create arraylist to keep track of alive pieces and loop through each one to see if it can take king if king moves there.
 	
@@ -1368,6 +1375,127 @@ public class ChessBoard  {
 				
 		}
 		
+		public List<int[]> checkPawnEnPassantLeftWhite(String startPieceColour, int startRow, int startColumn){
+			
+			if(startRow ==4 && startColumn > 0){
+				if(checkBoxForPiece(startRow, startColumn-1)){
+					if(pieceofOpposingColourOnBox(startPieceColour, startRow,startColumn-1)&&m_boxes[startRow][startColumn-1].m_piece instanceof Pawn){
+						System.out.println("EnPassantLeft");
+						if(((Pawn)m_boxes[startRow][startColumn-1].m_piece).justMovedTwo()){
+							System.out.println("here");
+							int[] point = new int[2];
+							point[0]=startRow+1;
+							point[1]=startColumn-1;
+							m_PossibleMovesPawnEnPassantLeftWhite.add(point);
+							return m_PossibleMovesPawnEnPassantLeftWhite;
+						}else{
+							return m_PossibleMovesPawnEnPassantLeftWhite;
+						}
+						
+					}
+					
+				}else{
+					return m_PossibleMovesPawnEnPassantLeftWhite;
+				}
+			}
+			else{
+				return m_PossibleMovesPawnEnPassantLeftWhite;
+			}
+			
+			return m_PossibleMovesPawnEnPassantLeftWhite;
+		}
+		
+		public List<int[]> checkPawnEnPassantLeftBlack(String startPieceColour, int startRow, int startColumn){
+			
+			if(startRow ==3 && startColumn > 0){
+				if(checkBoxForPiece(startRow, startColumn-1)){
+					if(pieceofOpposingColourOnBox(startPieceColour, startRow,startColumn-1)&&m_boxes[startRow][startColumn-1].m_piece instanceof Pawn){
+						System.out.println("EnPassant");
+						if(((Pawn)m_boxes[startRow][startColumn-1].m_piece).justMovedTwo()){
+							System.out.println("here");
+							int[] point = new int[2];
+							point[0]=startRow-1;
+							point[1]=startColumn-1;
+							m_PossibleMovesPawnEnPassantLeftBlack.add(point);
+							return m_PossibleMovesPawnEnPassantLeftBlack;
+						}else{
+							return m_PossibleMovesPawnEnPassantLeftBlack;
+						}
+						
+					}
+					
+				}else{
+					return m_PossibleMovesPawnEnPassantLeftBlack;
+				}
+			}
+			else{
+				return m_PossibleMovesPawnEnPassantLeftBlack;
+			}
+			
+			return m_PossibleMovesPawnEnPassantLeftBlack;
+		}
+		
+		public List<int[]> checkPawnEnPassantRightWhite(String startPieceColour, int startRow, int startColumn){
+			
+			if(startRow ==4 && startColumn < 7){
+				if(checkBoxForPiece(startRow, startColumn+1)){
+					if(pieceofOpposingColourOnBox(startPieceColour, startRow,startColumn+1)&&m_boxes[startRow][startColumn+1].m_piece instanceof Pawn){
+						System.out.println("EnPassantRight");
+						if(((Pawn)m_boxes[startRow][startColumn+1].m_piece).justMovedTwo()){
+							System.out.println("here");
+							int[] point = new int[2];
+							point[0]=startRow+1;
+							point[1]=startColumn+1;
+							m_PossibleMovesPawnEnPassantRightWhite.add(point);
+							return m_PossibleMovesPawnEnPassantRightWhite;
+						}else{
+							return m_PossibleMovesPawnEnPassantRightWhite;
+						}
+						
+					}
+					
+				}else{
+					return m_PossibleMovesPawnEnPassantRightWhite;
+				}
+			}
+			else{
+				return m_PossibleMovesPawnEnPassantRightWhite;
+			}
+			
+			return m_PossibleMovesPawnEnPassantRightWhite;
+		}
+		
+		
+		public List<int[]> checkPawnEnPassantRightBlack(String startPieceColour, int startRow, int startColumn){
+			
+			if(startRow ==3 && startColumn < 7){
+				if(checkBoxForPiece(startRow, startColumn+1)){
+					if(pieceofOpposingColourOnBox(startPieceColour, startRow,startColumn+1)&&m_boxes[startRow][startColumn+1].m_piece instanceof Pawn){
+						
+						if(((Pawn)m_boxes[startRow][startColumn+1].m_piece).justMovedTwo()){
+							
+							int[] point = new int[2];
+							point[0]=startRow-1;
+							point[1]=startColumn+1;
+							m_PossibleMovesPawnEnPassantRightBlack.add(point);
+							return m_PossibleMovesPawnEnPassantRightBlack;
+						}else{
+							return m_PossibleMovesPawnEnPassantRightBlack;
+						}
+						
+					}
+					
+				}else{
+					return m_PossibleMovesPawnEnPassantRightBlack;
+				}
+			}
+			else{
+				return m_PossibleMovesPawnEnPassantRightBlack;
+			}
+			
+			return m_PossibleMovesPawnEnPassantRightBlack;
+		}
+		
 		public List<int[]> checkKnightJump1ForwardRightWhite(String startPieceColour,int startRow, int startColumn){
 			if(startRow >= 6||startColumn==7){
 				return m_PossibleMovesKnightJump1ForwardRightWhite;
@@ -2004,6 +2132,22 @@ public class ChessBoard  {
 
 		public void clearKnightJump2BackwardLeftBlack(){
 			m_PossibleMovesKnightJump2BackwardLeftBlack.clear();
+		}
+		
+		public void clearPawnEnPassantRightWhite(){
+			m_PossibleMovesPawnEnPassantRightWhite.clear();
+		}
+		
+		public void clearPawnEnPassantLeftWhite(){
+			m_PossibleMovesPawnEnPassantLeftWhite.clear();
+		}
+		
+		public void clearPawnEnPassantRightBlack(){
+			m_PossibleMovesPawnEnPassantRightBlack.clear();
+		}
+		
+		public void clearPawnEnPassantLeftBlack(){
+			m_PossibleMovesPawnEnPassantLeftBlack.clear();
 		}
 		
 }
